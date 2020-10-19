@@ -1,7 +1,10 @@
 module.exports =  {
     name: 'links',
     description: 'Prints links as message.',
-    execute(message){
+    async execute(message){
+        const fs = require('fs');
+        const Discord = require('discord.js');
+
         const links  = fs.readFileSync('cursos.txt', 'UTF-8');
         const list = links.split(/\r?\n/);
         var a = 0;

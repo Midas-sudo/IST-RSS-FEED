@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-let Parser = require('rss-parser');
 const fs = require('fs');
 
 const {
@@ -8,30 +7,28 @@ const {
 } = require('./config.json');
 
 const client = new Discord.Client();
-
+client.commands = new Discord.Collection();
 
 const rss_commands = fs.readdirSync('./rss_commands/').filter(file => file.endsWith('.js'));
 
 for(const file of rss_commands){
   const command = require(`./rss_commands/${file}`);
-  client.commands.set(command.name, command);
-  
+  client.commands.set(command.name, command);  
 }
 
 client.login(token);
 
 
 client.once('ready', () => {
-    console.log('Txolas Manager is online!');
-    client.commands.get('update-rss').execute();    
-   });
-   client.once('reconnecting', () => {
+    console.log('Txolas Manager is online!');  
+    client.commands.get('update_rss').execute(client);
+});
+client.once('reconnecting', () => {
     console.log('Reconnecting!');
-   });
-   client.once('disconnect', () => {
+});
+client.once('disconnect', () => {
     console.log('Disconnect!');
-   });
-
+});
 
 
 
@@ -40,7 +37,6 @@ client.on('message', async message => {
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
     if(command === "help-rss" || command === "help"){
       client.commands.get('help_rss').execute(message); //Feito
 
@@ -50,10 +46,10 @@ client.on('message', async message => {
     } else if (command === "links"){
       client.commands.get('links').execute(message); //Feito
 
-    } else if (command === "remove_links"){
+    } else if (command === "remove_links" || command === "remove_link"){
       client.commands.get('remove_links').execute(message, args); //Feito
 
-    } else if (command === "add_links"){
+    } else if (command === "add_links" || command === "add_link"){
       client.commands.get('add_links').execute(message, args); //Feito
 
     } else if (command === "update"){

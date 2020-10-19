@@ -1,16 +1,13 @@
 module.exports =  {
     name: 'remove_links',
     description: 'Function to remove links.',
-    execute(message, args){
+    async execute(message, args){
+        const fs = require('fs');
         const links  = fs.readFileSync('cursos.txt', 'UTF-8');
         const list = links.split(/\r?\n/);
         list.pop();
         var a = 1;
-        if(args.length <2){
-            message.channel.send("Introduza um valor.");
-            return;            
-        }
-        var numero = args[1];
+        var numero = args[0];;
         if (isNaN(numero)){
             message.channel.send("Insira apenas um numero válido")
         }else{

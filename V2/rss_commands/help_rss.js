@@ -1,7 +1,7 @@
 module.exports =  {
     name: 'help_rss',
     description: 'Help command for RSS - IST News',
-    execute(message){
+    async execute(message){
         message.channel.send({
             embed: {
                 color: 0xf7c500,

@@ -1,7 +1,10 @@
 module.exports =  {
     name: 'rss_check',
     description: 'Main Brain for RSS - IST News',
-    execute(client){
+    async execute(client){
+        let Parser = require('rss-parser');
+        const fs = require('fs');
+        
         let parser = new Parser();
         const cursos = fs.readFileSync('cursos.txt', 'UTF-8');
     
