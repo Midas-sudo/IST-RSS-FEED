@@ -12,7 +12,7 @@ module.exports =  {
             fs.writeFile('time.txt', time,  function (err) {
                 if (err) return console.log(err);
             });
-            client.commands.get('update_rss').execute(client);
+            client.rss_commands.get('update_rss').execute(client);
         };
     }
 }

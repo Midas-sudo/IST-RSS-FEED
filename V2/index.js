@@ -7,21 +7,21 @@ const {
 } = require('./config.json');
 
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
+client.rss_commands = new Discord.Collection();
 
 const rss_commands = fs.readdirSync('./rss_commands/').filter(file => file.endsWith('.js'));
 
 for(const file of rss_commands){
   const command = require(`./rss_commands/${file}`);
-  client.commands.set(command.name, command);  
+  client.rss_commands.set(command.name, command);  
 }
 
 client.login(token);
 
 
 client.once('ready', () => {
-    console.log('Txolas Manager is online!');  
-    client.commands.get('update_rss').execute(client);
+    console.log('IST RSS News is online!');  
+    client.rss_commands.get('update_rss').execute(client);
 });
 client.once('reconnecting', () => {
     console.log('Reconnecting!');
@@ -37,23 +37,25 @@ client.on('message', async message => {
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+
+
     if(command === "help-rss" || command === "help"){
-      client.commands.get('help_rss').execute(message); //Feito
+      client.rss_commands.get('help_rss').execute(message); //Feito
 
     } else if (command === "set_time"){
-      client.commands.get('set_time').execute(message, args, client); //Feito
+      client.rss_commands.get('set_time').execute(message, args, client); //Feito
 
     } else if (command === "links"){
-      client.commands.get('links').execute(message); //Feito
+      client.rss_commands.get('links').execute(message); //Feito
 
     } else if (command === "remove_links" || command === "remove_link"){
-      client.commands.get('remove_links').execute(message, args); //Feito
+      client.rss_commands.get('remove_links').execute(message, args); //Feito
 
     } else if (command === "add_links" || command === "add_link"){
-      client.commands.get('add_links').execute(message, args); //Feito
+      client.rss_commands.get('add_links').execute(message, args); //Feito
 
     } else if (command === "update"){
-      client.commands.get('update_rss').execute(client); //Feito
+      client.rss_commands.get('update_rss').execute(client); //Feito
 
     } else {
       message.channel.send("That's not a valid command!")

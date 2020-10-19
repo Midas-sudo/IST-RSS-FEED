@@ -5,11 +5,8 @@ module.exports =  {
       const fs = require('fs');
       const time = fs.readFileSync('time.txt', 'UTF-8');
       console.log("Update Command");
-      client.commands.get('rss_check').execute(client);
+      client.rss_commands.get('rss_check').execute(client);
       console.log(time*60*1000);
-      setTimeout(function(){client.commands.get('update_rss').execute(client)}, time*60*1000);
+      setTimeout(function(){client.rss_commands.get('update_rss').execute(client)}, time*60*1000);
     }
-
-
-
 }
